@@ -72,7 +72,6 @@ def rows(items):
     for nm, half, full, abv, batch, house, agave, tag in items:
         key = ' '.join([nm, house, agave, tag]).lower()
         key = key.replace('·', ' ')
-        mark = '<span class="bx" title="bottled at batch strength">◇</span>' if batch else ''
         det = f'<span class="hs">{e(house)}</span><span class="dot"> — </span><span class="ag">{e(agave)}</span>'
         if tag:
             det += f'<span class="tg">{e(tag)}</span>'
@@ -81,7 +80,7 @@ def rows(items):
             f'<span class="top">'
             f'<span class="nm">{e(nm)}</span>'
             f'<span class="ldr"></span>'
-            f'<span class="pf">{e(abv)}{mark}</span>'
+            f'<span class="pf">{e(abv)}</span>'
             f'<span class="pr"><span class="p1">{half}</span><span class="sl">/</span><span class="p2">{full}</span></span>'
             f'</span>'
             f'<span class="org">{det}</span>'
@@ -231,7 +230,6 @@ body{{
   letter-spacing:.02em;color:var(--muted);font-variant-numeric:tabular-nums;
   white-space:nowrap;position:relative;
 }}
-.bx{{color:var(--wine-soft);font-size:9px;vertical-align:2px;margin-left:2px}}
 .pr{{display:flex;align-items:baseline;flex:0 0 auto;font-weight:500;font-size:15px;
   font-variant-numeric:tabular-nums;color:var(--wine);white-space:nowrap}}
 .p1{{width:30px;text-align:right;color:var(--wine-soft)}}
@@ -286,9 +284,6 @@ body{{
 
   <div class="foot">
     <div class="footmark">{CREST}</div>
-    <strong>A note on the list</strong>
-    Under each bottle is the house that made it, the town it was made in, and the agave it was made from. A <em>&#9671;</em> means the bottle is filled at batch strength &mdash; the ABV moves a little every time we restock, so the number on the bottle is the one that counts.<br>
-    Two prices means two pours &mdash; half and full. A few of these are single-batch and finite; when they&rsquo;re gone they&rsquo;re gone. Prices subject to change.
     <p class="links">
       <a href="https://mrpaulswhiskey.netlify.app/">The whiskey list</a>
       <a href="https://www.mrpaulssupperclub.com/menu/">All menus</a>
