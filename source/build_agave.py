@@ -285,7 +285,7 @@ body{{
     <h1>Agave</h1>
     <p class="eyebrow">Tequila &middot; Mezcal &middot; Agave Spirits</p>
     <div class="hr"></div>
-    <p class="tag">Every bottle on the back bar, with what&rsquo;s in it and where it came from.</p>
+    <p class="tag">Every bottle in Mario&rsquo;s backbar</p>
   </header>
 
   <div class="tools">
@@ -294,7 +294,6 @@ body{{
       <input id="q" type="search" placeholder="Search a bottle, a distillery, an agave&hellip;" autocomplete="off" aria-label="Search the agave list">
     </label>
     <nav class="chips" aria-label="Jump to a category">{chips}</nav>
-    <p class="legend"><b>Pours</b></p>
   </div>
 
   {secs}
