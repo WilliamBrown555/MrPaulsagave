@@ -307,6 +307,7 @@ body{{
       <a href="https://mrpaulsaperitif.netlify.app/">The ap&eacute;ritif &amp; digestif list</a>
       <a href="https://www.mrpaulssupperclub.com/menu/">All menus</a>
       <a href="https://www.mrpaulssupperclub.com/">mrpaulssupperclub.com</a>
+      <a href="https://lnk.bio/CarnivalBar">All our links</a>
     </p>
   </div>
 </div>
