@@ -285,7 +285,7 @@ body{{
     <h1>Agave</h1>
     <p class="eyebrow">Tequila &middot; Mezcal &middot; Agave Spirits</p>
     <div class="hr"></div>
-    <p class="tag">Every bottle in Mario&rsquo;s backbar</p>
+    <p class="tag">A list of Every bottle in Mario&rsquo;s Backbar.</p>
   </header>
 
   <div class="tools">
