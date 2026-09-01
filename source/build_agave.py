@@ -170,6 +170,8 @@ body{{
 
 /* ---------- masthead ---------- */
 .mast{{padding:46px 0 4px;text-align:center}}
+.crestwrap{{width:min(132px,38%);margin:0 auto 22px;color:var(--wine)}}
+.crestwrap svg{{display:block;width:100%;height:auto}}
 .mast h1{{
   font-weight:800;font-size:clamp(42px,12vw,66px);line-height:.95;
   letter-spacing:.01em;text-transform:uppercase;margin:0;color:var(--wine);
@@ -282,6 +284,7 @@ body{{
 
 <div class="sheet">
   <header class="mast">
+    <div class="crestwrap">{CREST}</div>
     <h1>Agave</h1>
     <p class="eyebrow">Tequila &middot; Mezcal &middot; Agave Spirits</p>
     <div class="hr"></div>
@@ -303,9 +306,9 @@ body{{
   <div class="foot">
     <div class="footmark">{CREST}</div>
     <p class="links">
+      <a href="https://mrpaulscarnival.netlify.app/carnival-bar-menus.pdf">The Carnival Bar menu</a>
       <a href="https://mrpaulswhiskey.netlify.app/">The whiskey list</a>
       <a href="https://mrpaulsaperitif.netlify.app/">The ap&eacute;ritif &amp; digestif list</a>
-      <a href="https://www.mrpaulssupperclub.com/menu/">All menus</a>
       <a href="https://www.mrpaulssupperclub.com/">mrpaulssupperclub.com</a>
       <a href="https://lnk.bio/CarnivalBar">All our links</a>
     </p>
