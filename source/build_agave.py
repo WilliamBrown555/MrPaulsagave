@@ -294,7 +294,7 @@ body{{
       <input id="q" type="search" placeholder="Search a bottle, a distillery, an agave&hellip;" autocomplete="off" aria-label="Search the agave list">
     </label>
     <nav class="chips" aria-label="Jump to a category">{chips}</nav>
-    <p class="legend"><b>Half &amp; full pour</b></p>
+    <p class="legend"><b>Pours</b></p>
   </div>
 
   {secs}
