@@ -7,6 +7,10 @@ OUT = os.path.join(HERE, '..', 'Agave Website')
 CREST = io.open(os.path.join(HERE, 'crest.svg'), encoding='utf-8').read()
 CREST = CREST.replace('class="crest"', 'class="crest" aria-hidden="true" focusable="false"')
 
+# Half pours are offered only on bottles at or above this full-pour price.
+# Change this one number and rebuild; nothing else needs touching.
+HALF_POUR_MIN = 25
+
 # name, half, full, abv, batch?, house, agave, tag
 T = [
  ("Arette Artesanal Fuerte", 12, 21, "50.5%", 0, "Tequila Arette · Tequila, Jalisco", "Blue Weber · Los Valles", "Brick oven, cement-tank ferment"),
@@ -29,10 +33,10 @@ T = [
  ("Herradura Blanco", 8, 16, "40%", 0, "Casa Herradura · Amatitán, Jalisco", "Blue Weber · Los Valles", ""),
  ("Herradura Reposado", 11, 20, "40%", 0, "Casa Herradura · Amatitán, Jalisco", "Blue Weber · Los Valles", ""),
  ("La Gritona Reposado", 9, 17, "40%", 0, "Destilería Raza Azteca · Valle de Guadalupe, Jalisco", "Blue Weber · Los Altos", "Distilled by Melly Barajas"),
- ("Lalo", 8, 15, "40%", 0, "Grupo Tequilero México · Arandas, Jalisco", "Blue Weber · Los Altos", "Additive-free blanco"),
+ ("Lalo", 8, 15, "40%", 0, "Grupo Tequilero México · Arandas, Jalisco", "Blue Weber · Los Altos", ""),
  ("Mi Casa 9yr Extra Anejo", 25, 50, "43%", 1, "Casa Tequilera de Arandas · Arandas, Jalisco", "Blue Weber · El Cucuno estate, Michoacán", ""),
- ("Mijenta Blanco", 7, 14, "40%", 0, "Casa Tequilera de Arandas · Arandas, Jalisco", "Blue Weber · Los Altos", "Additive-free"),
- ("Mijenta Reposado", 9, 18, "40%", 0, "Casa Tequilera de Arandas · Arandas, Jalisco", "Blue Weber · Los Altos", "Additive-free"),
+ ("Mijenta Blanco", 7, 14, "40%", 0, "Casa Tequilera de Arandas · Arandas, Jalisco", "Blue Weber · Los Altos", ""),
+ ("Mijenta Reposado", 9, 18, "40%", 0, "Casa Tequilera de Arandas · Arandas, Jalisco", "Blue Weber · Los Altos", ""),
  ("Paladar Amburana", 12, 23, "40%", 0, "Tequila Arette · Tequila, Jalisco", "Blue Weber · Los Valles", "Destilado de agave — amburana cask"),
  ("Paladar Still Strength", 11, 21, "50%", 0, "Tequila Arette · Tequila, Jalisco", "Blue Weber · Los Valles", "Undiluted off the still"),
  ("Patron Silver", 9, 17, "40%", 0, "Hacienda Patrón · Atotonilco el Alto, Jalisco", "Blue Weber · Los Altos", ""),
@@ -75,13 +79,23 @@ def rows(items):
         det = f'<span class="hs">{e(house)}</span><span class="dot"> — </span><span class="ag">{e(agave)}</span>'
         if tag:
             det += f'<span class="tg">{e(tag)}</span>'
+        # Half pour only on bottles at or above HALF_POUR_MIN. The empty cells are
+        # kept so every full price stays under the "Full" column header.
+        if full >= HALF_POUR_MIN:
+            price = (f'<span class="p1">{half}</span>'
+                     f'<span class="sl">/</span>'
+                     f'<span class="p2">{full}</span>')
+        else:
+            price = (f'<span class="p1"></span>'
+                     f'<span class="sl"></span>'
+                     f'<span class="p2">{full}</span>')
         out.append(
             f'<li class="pour" data-n="{e(key)}">'
             f'<span class="top">'
             f'<span class="nm">{e(nm)}</span>'
             f'<span class="ldr"></span>'
             f'<span class="pf">{e(abv)}</span>'
-            f'<span class="pr"><span class="p1">{half}</span><span class="sl">/</span><span class="p2">{full}</span></span>'
+            f'<span class="pr">{price}</span>'
             f'</span>'
             f'<span class="org">{det}</span>'
             f'</li>'
@@ -110,7 +124,7 @@ HTML = f"""<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mr. Paul's Agave List</title>
 <meta name="description" content="{e(DESC)}">
-<meta name="theme-color" content="#f3f1ee">
+<meta name="theme-color" content="#DCD0B3">
 <meta name="color-scheme" content="light">
 
 <!-- link preview (texts, iMessage, Facebook, Instagram bio, link tree) -->
@@ -123,14 +137,19 @@ HTML = f"""<!doctype html>
 <meta name="twitter:description" content="{e(DESC)}">
 
 <!-- crest favicon, inlined so there is no second file to upload -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f3f1ee'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial,sans-serif' font-size='19' font-weight='bold' fill='%238c2830' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23dcd0b3'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial,sans-serif' font-size='19' font-weight='bold' fill='%238c2830' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 <style>
 :root{{
-  --ground:#f3f1ee; --panel:#eae5df; --panel-2:#e3ddd6;
-  --wine:#8c2830; --wine-lit:#a83a41; --wine-soft:#b2646a;
-  --ink:#26221f; --muted:#7b7369; --faint:#948b80;
+  /* "Antique" ground, chosen Sept 2026 — the printed sheet's #f3f1ee read as
+     glare on screen. The greys below are darkened to match: on this paper they
+     land on the same contrast #7b7369 and #948b80 held on the old one. */
+  --ground:#DCD0B3; --panel:#D3C5A2; --panel-2:#CCBD96; --inputbg:#E1D9C6;
+  /* same colour as --ground at zero alpha; keep the two in step */
+  --ground-0:rgba(220,208,179,0);
+  --wine:#8c2830; --wine-lit:#a83a41; --wine-soft:#994E55;
+  --ink:#26221f; --muted:#665E55; --faint:#7C7369; --ag:#5B5245;
   --rule:rgba(140,40,48,.28); --hair:rgba(140,40,48,.5);
 }}
 *{{box-sizing:border-box}}
@@ -171,14 +190,14 @@ body{{
   background:var(--ground);
 }}
 .tools::after{{content:'';position:absolute;left:0;right:0;top:100%;height:16px;pointer-events:none;
-  background:linear-gradient(var(--ground),rgba(243,241,238,0))}}
+  background:linear-gradient(var(--ground),var(--ground-0))}}
 @media (max-width:640px){{.tools{{margin:22px -18px 0;padding:10px 18px 8px}}}}
 .search{{position:relative;display:block}}
 .search svg{{position:absolute;left:13px;top:50%;transform:translateY(-50%);
   width:15px;height:15px;stroke:var(--faint);fill:none;stroke-width:1.8}}
 #q{{
   width:100%;padding:11px 14px 11px 37px;border-radius:2px;
-  background:#fbfaf8;border:1px solid var(--rule);color:var(--ink);
+  background:var(--inputbg);border:1px solid var(--rule);color:var(--ink);
   font-family:inherit;font-size:15px;
 }}
 #q::placeholder{{color:var(--faint)}}
@@ -237,7 +256,7 @@ body{{
 .p2{{width:27px;text-align:right}}
 .org{{margin-top:3px;font-size:12.5px;line-height:1.45;color:var(--muted);
   letter-spacing:.005em;max-width:58ch}}
-.org .ag{{font-style:italic;color:#6f6659}}
+.org .ag{{font-style:italic;color:var(--ag)}}
 .org .dot{{color:var(--faint)}}
 .org .tg{{display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
   color:var(--wine-soft);margin-top:2px;font-weight:600}}
@@ -266,7 +285,7 @@ body{{
     <h1>Agave</h1>
     <p class="eyebrow">Tequila &middot; Mezcal &middot; Agave Spirits</p>
     <div class="hr"></div>
-    <p class="tag">Every bottle on the back bar, with what&rsquo;s in it and where it came from. Prices are for a half pour or a full pour.</p>
+    <p class="tag">Every bottle on the back bar, with what&rsquo;s in it and where it came from. Half pours on bottles $25 and up.</p>
   </header>
 
   <div class="tools">
