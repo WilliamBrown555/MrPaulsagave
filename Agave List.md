@@ -27,7 +27,7 @@ Mi Casa 9yr Extra Anejo - 25 / 50
 Paladar Still Strength - 11 / 21
 Paladar Amburana - 12 / 23
 Patron Silver - 9 / 17
-Patron Reposado - 9 / 18
+Patron Reposado - 18
 Riazul Reposado - 12 / 22
 
 
